@@ -24,7 +24,7 @@ class usdkrw(APIView):
         nal = '20210128'
         mydate = datetime.strptime(nal, '%Y%m%d')
         dates = []
-        for i in range(1, 200):
+        for i in range(1, 10):
             beforemonth = mydate + relativedelta(days=-i)
             strdate = beforemonth.strftime("%Y%m%d")
             dates.append(strdate)
@@ -63,6 +63,6 @@ class usdkrw(APIView):
         conn.close()
         question = models.Question(data=data)
         serializer = serializers.QuestionSerializer(question)
-
+        print("test")
         return Response(serializer.data);
 
