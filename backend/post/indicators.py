@@ -23,6 +23,9 @@ class usdkrw(APIView):
         apikey = "KDqozvh7wMKStFfUb4EGLkI5iXqgLB8i"
 
         api = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey={key}&searchdate={date}&data=AP01"
+        conn = pymysql.connect(host='3.34.96.149', user='root', password='1234', db='indicators', charset='utf8',
+                               cursorclass=pymysql.cursors.DictCursor)
+        cursor2 = conn.cursor()
         sql2 = "SELECT dates FROM usdkrw ORDER BY dates desc LIMIT 1"
         cursor2.execute(sql2)
         rows = cursor2.fetchall()
@@ -70,7 +73,7 @@ class usdkrw(APIView):
 
         else:
             data = []
-
+        data = []
         cursor3 = conn.cursor()
 
         # 테이블 변경
