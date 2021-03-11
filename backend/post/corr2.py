@@ -24,13 +24,13 @@ class DetailPost(APIView):
         listindi = []
 
         data = json.loads(request.body.decode('utf-8'))
-        print(data)
+        print("처음 확인",data)
 
         conn = pymysql.connect(host='3.34.96.149', user='root', password='1234', db='indicators', charset='utf8',
-                               cursorclass=pymysql.cursors.DictCursor)
+                              cursorclass=pymysql.cursors.DictCursor,read_timeout=80)
         cursor = conn.cursor()
-        # data1
-        sql = "SELECT price FROM exechangerate where symbol='" + data[1] + "' ORDER BY dates LIMIT  "+ str(data[0])
+        # 처음
+        sql = "SELECT price FROM " + data[1] + " ORDER BY dates LIMIT  "+ str(data[0])
         print(sql)
         cursor.execute(sql)
         rows = cursor.fetchall()
@@ -43,6 +43,7 @@ class DetailPost(APIView):
         for i in data1:
             cursor2 = conn.cursor()
             sql2 = "select price from " + i + " order by dates limit " + str(data[0])
+            print(sql2)
             cursor2.execute(sql2)
             rows = cursor2.fetchall()
             print(rows)
@@ -53,6 +54,8 @@ class DetailPost(APIView):
 
             a, b = correlation
             corr.append(a)
+            if a > 0.999999999:
+                corr.remove(a)
             listindi.clear()
 
         # data2
@@ -66,8 +69,7 @@ class DetailPost(APIView):
             correlation = pearsonr(listsymbol, listindi)
             a, b = correlation
             corr.append(a)
-            if a > 0.999999999:
-                corr.remove(a)
+
             listindi.clear()
 
         for i in data1:
@@ -88,6 +90,10 @@ class DetailPost(APIView):
                 a = "원/달러"
 
             corr.append(a)
+            print(i)
+
+            if i == data[1]:
+                corr.remove(a)
 
         for i in data2:
 
@@ -101,8 +107,7 @@ class DetailPost(APIView):
             elif i == "USDGBP":
                 a = "파운드/달러"
             corr.append(a)
-            if i == data[1]:
-                corr.remove(a)
+
 
         datas = corr
         print(datas)

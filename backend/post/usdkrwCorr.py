@@ -24,7 +24,7 @@ class DetailPost(APIView):
         data = json.loads(request.body.decode('utf-8'))
         print("확인",type(data))
         conn = pymysql.connect(host='3.34.96.149', user='root', password='1234', db='indicators', charset='utf8',
-                               cursorclass=pymysql.cursors.DictCursor)
+                               cursorclass=pymysql.cursors.DictCursor,read_timeout=80)
         cursor = conn.cursor()
         sql = "select price from usdkrw order by dates limit " + str(data)
         cursor.execute(sql)
