@@ -13,6 +13,7 @@ from . import indicatorUsdcny
 from . import indicatorUsdjpy
 from . import indicatorBitcoin
 from . import indicatorCorr
+from . import abc
 
 urlpatterns = [
     path('', views.ListPost.as_view()),
@@ -28,6 +29,7 @@ urlpatterns = [
     path('requestUsdcny/', indicatorUsdcny.Usdcny.as_view()),
     path('requestUsdjpy/', indicatorUsdjpy.Usdjpy.as_view()),
     path('requestBitcoin/', indicatorBitcoin.Bitcoin.as_view()),
-    path('requestCorr/', indicatorCorr.Corr.as_view())
+    path('requestCorr/', indicatorCorr.Corr.as_view()),
+    path('requestCorr2', abc.DetailPost.as_view()),
 
 ]
