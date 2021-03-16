@@ -17,6 +17,8 @@ from . import usdkrwCorr
 from . import corrExe
 from . import corr1
 from . import corr2
+from . import moment
+from . import rsi
 
 urlpatterns = [
     path('', views.ListPost.as_view()),
@@ -36,5 +38,7 @@ urlpatterns = [
     path('requestCorr2', usdkrwCorr.DetailPost.as_view()),
     path('corrExe', corrExe.DetailPost.as_view()),
     path('corr1', corr1.DetailPost.as_view()),
-    path('corr2', corr2.DetailPost.as_view())
+    path('corr2', corr2.DetailPost.as_view()),
+    path('moment', moment.DetailPost.as_view()),
+    path('rsi', rsi.DetailPost.as_view())
 ]
