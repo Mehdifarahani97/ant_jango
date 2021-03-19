@@ -58,13 +58,13 @@ class wti(APIView):
 
             res = requests.post(url, data, headers={'X-Requested-With': 'XMLHttpRequest',
                                                 'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36'}).content
-            #print(data)
+
             soup = BeautifulSoup(res, 'html.parser')
 
             items = soup.find('table', id='curr_table').find('tbody').find_all('tr')
-            #print(items)
+
             for item in items:
-            # 아래 두 줄은 앞에 탭을 입력하셔야 합니다...
+
                 l = item.find_all('td')
                 datekor = l[0].text
                 dates = datekor.replace('년','-').replace('월','-').replace('일','').replace(' ','')

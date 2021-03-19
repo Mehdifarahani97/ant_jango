@@ -76,21 +76,6 @@ class Momentum(bt.Strategy):
             if self.smaSlow > self.data.close[0]:
                 self.order = self.sell(size=self.getposition().size)
 
-def run(args=None):
-    cerebro = bt.Cerebro()
-    cerebro.broker.setcash(10000000)
-
-    data = bt.feeds.YahooFinanceData(dataname='005930.KS',
-                                         fromdate=datetime.datetime(2019, 1, 1),
-                                         todate=datetime.datetime(2019, 12, 31))
-    cerebro.adddata(data)
-    cerebro.addstrategy(Momentum)
-    print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
-    cerebro.run()
-
-    print('Final Portfolio Value: %.2f' % cerebro.broker.getvalue())
-    print(type(cerebro))
-
 class DetailPost(APIView):
     def post(self, request, *args, **kwargs):
 
@@ -119,14 +104,13 @@ class DetailPost(APIView):
         print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
         cerebro.run()
         print('Final Portfolio Value: %.2f' % cerebro.broker.getvalue())
-        print("마지막")
 
         for i in listdate:
             listall.append(i)
 
         for i in listdata:
             listall.append(i)
-        #print(listdata)
+            
         listdate.clear()
         listdata.clear()
         listfinal = []

@@ -40,7 +40,7 @@ class firstStrategy(bt.Strategy):
                     order.executed.value,
                     order.executed.comm
                 ))
-                listdata.append((order.executed.value-10000000)/10000000)
+                listdata.append((order.executed.value-10000)/1000000)
                 self.buyprice = order.executed.price
                 self.buycomm = order.executed.comm
 
@@ -51,7 +51,7 @@ class firstStrategy(bt.Strategy):
                     order.executed.value,
                     order.executed.comm
                 ))
-                listdata.append((order.executed.value-10000000)/10000000)
+                listdata.append((order.executed.value-10000)/1000000)
             self.bar_executed = len(self)
         elif order.status in [order.Canceled, order.Margin, order.Rejected]:
             pass
@@ -70,21 +70,6 @@ class firstStrategy(bt.Strategy):
         else:
             if self.rsi > 70:
                 self.sell(size=100)
-
-def run(args=None):
-    cerebro = bt.Cerebro()
-    cerebro.broker.setcash(10000000)
-
-    df = fdr.DataReader('HSBC', start=datetime(2019, 1, 4), end=datetime(2021, 1, 4))
-    print(df.head())
-    data = bt.feeds.PandasData(dataname=df)
-    cerebro.adddata(data)
-    cerebro.addstrategy(firstStrategy)
-    print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
-    cerebro.run()
-
-    print('Final Portfolio Value: %.2f' % cerebro.broker.getvalue())
-    print(type(cerebro))
 
 class DetailPost(APIView):
     def post(self, request, *args, **kwargs):
@@ -105,6 +90,7 @@ class DetailPost(APIView):
 
         cerebro = bt.Cerebro()
         cerebro.broker.setcash(10000)
+        print(datan)
         df = fdr.DataReader(datan, start=fd, end=td)
         data = bt.feeds.PandasData(dataname=df)
         cerebro.adddata(data)
@@ -119,7 +105,7 @@ class DetailPost(APIView):
 
         for i in listdata:
             listall.append(i)
-        #print(listdata)
+
         listdate.clear()
         listdata.clear()
         listfinal = []
